@@ -2,7 +2,13 @@ const mongoose = require("mongoose")
 const plm = require("passport-local-mongoose")
 const { stringify } = require("uuid")
 
-mongoose.connect('mongodb://localhost:27017/Newzbuddy')
+mongoose.connect('mongodb+srv://elite-p:<98709870>@newzbuddy1.v4eu1.mongodb.net/Newzbuddy?retryWrites=true&w=majority&appName=newzbuddy1', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
 
 let userSchema = mongoose.Schema({
     username: String,
