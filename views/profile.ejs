@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+</head>
+
+<body>
+    <section class="profile-section">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <h3>@<%= userProfile?.username || "User" %></h3>
+            <i class="fas fa-cog settings-icon" id="settings-icon"></i>
+        </div>
+
+        <!-- Hidden Settings Card -->
+        <div id="settings-card" class="settings-card hidden">
+            <i class="fas fa-times close-icon" id="close-icon"></i>
+            <ul>
+                <a href="/logout">
+                    <li id="logout-btn">Logout</li>
+                </a>
+            </ul>
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div class="profile-picture">
+            <div class="picture-container" onclick="document.getElementById('file-upload').click();">
+                <% if (userProfile?.profilepic) { %>
+                    <img src="<%= userProfile.profilepic %>" alt="Profile Picture" id="profile-pic">
+                <% } else { %>
+                    <img src="/images/default-profile.png" alt="Default Profile Picture" id="profile-pic">
+                <% } %>
+
+                <!-- Form for file upload -->
+                <form action="/uploadpp" method="post" enctype="multipart/form-data" style="display: none;">
+                    <input type="file" id="file-upload" name="file" accept="image/*" onchange="this.form.submit();">
+                </form>
+            </div>
+            <h2 style="margin: 10px;"><%= userProfile?.name || "No Name Provided" %></h2>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats" style="text-decoration: none;">
+            <div>
+                <strong><%= userProfile?.posts.length || 0 %></strong>
+                <p>Posts</p>
+            </div>
+            <div>
+                <a href="/profile/<%= userProfile?._id %>/followers" style="text-decoration: none;">
+                    <strong><%= userProfile?.followers.length || 0 %></strong>
+                    <p>Followers</p>
+                </a>
+            </div>
+            <div>
+                <a href="/profile/<%= userProfile?._id %>/following" style="text-decoration: none;">
+                    <strong><%= userProfile?.following.length || 0 %></strong>
+                    <p>Following</p>
+                </a>
+            </div>
+        </div>
+
+        <div id="profile-card-container"></div>
+
+        <!-- Profile Buttons Section -->
+        <div class="profile-buttons">
+            <button class="editprofile" style="height: 35px; margin-top: 10px;">Edit profile</button>
+            <button style="height: 35px; margin-top: 10px;">Share profile</button>
+        </div>
+         <!-- Icon Section -->
+         <div class="icon-section">
+            <i class="fas fa-th-large active" id="posts-icon" id="show-all-posts-btn"></i> <!-- Posts -->
+            <i class="fas fa-heart" id="liked-icon"  id="show-liked-posts-btn"></i> <!-- Liked posts -->
+            <i class="fas fa-bookmark" id="saved-icon"  id="show-saved-posts-btn"></i> <!-- Saved posts -->
+        </div>
+
+        <div class="grid-layout" id="grid-layout">
+            <!-- Posts will be dynamically added here by JavaScript -->
+        </div>
+        
+
+        <!-- Centered Upload Icon and Text (optional) -->
+        <div class="no-posts" id="no-posts" style="display: none;">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            <p>Upload an article</p>
+        </div>
+    </section>
+
+           
+    <script>
+        // Get the elements
+        const settingsIcon = document.getElementById('settings-icon');
+        const settingsCard = document.getElementById('settings-card');
+        const closeIcon = document.getElementById('close-icon');
+
+        // When the settings icon is clicked, show the settings card by adding the 'active-card' class
+        settingsIcon.addEventListener('click', () => {
+            settingsCard.classList.toggle('active-card');
+            settingsCard.classList.toggle('hidden');
+        });
+
+        // When the close icon is clicked, hide the settings card by removing the 'active-card' class
+        closeIcon.addEventListener('click', () => {
+            settingsCard.classList.remove('active-card');
+            settingsCard.classList.add('hidden');
+        });
+
+        // Optional: Click outside of the card to close it (by clicking anywhere on the screen)
+        window.addEventListener('click', (e) => {
+            if (!settingsCard.contains(e.target) && !settingsIcon.contains(e.target)) {
+                settingsCard.classList.remove('active-card');
+                settingsCard.classList.add('hidden');
+            }
+        });
+
+
+        window.onload = function () {
+            document.getElementById('posts-icon').click(); // Automatically trigger click on posts icon
+        };
+        
+        document.getElementById('posts-icon').addEventListener('click', async () => {
+    const gridLayout = document.getElementById('grid-layout');
+
+    // Show a skeleton loader before fetching the data
+    gridLayout.innerHTML = `
+        <div class="loading-skeleton">
+            <div class="skeleton-post"></div>
+            <div class="skeleton-post"></div>
+            <div class="skeleton-post"></div>
+        </div>
+    `;
+
+    try {
+        // Fetching the posts from the `/profile/posts` endpoint
+        const response = await fetch('/profile/posts', { method: 'GET' });
+        const data = await response.json();
+
+        // Clear the skeleton loader after fetching the data
+        gridLayout.innerHTML = '';
+
+        // Check if posts exist
+        if (!data || !data.posts || data.posts.length === 0) {
+            gridLayout.innerHTML = `
+                <div class="no-posts">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    <p>No posts available</p>
+                </div>`;
+        } else {
+            // Loop through each post and add to the grid
+            data.posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('grid-item');
+
+                // Ensure likes count is displayed, even if it's 0
+                
+                
+                // Since the route returns both `posts` and `formattedPosts`,
+                // we will ensure to use `formattedPosts` for the formatted date.
+                const formattedPost = data.formattedPosts[index];
+
+                // Create post HTML dynamically
+                postElement.innerHTML = `
+                    <div class="post-image-container">
+                        <a href="/articleview/${post._id}">
+                            <img src="${post.filePath}?v=${new Date().getTime()}" 
+                                alt="${post.title || 'Untitled'}" 
+                                class="grid-image">
+                        </a>
+                    </div>
+                    
+                    <div class="grid-content">
+                        <h3>${post.title || 'Untitled Post'}</h3>
+
+                        <div class="icons">
+                            <span class="likes">${post.likes.length} likes</span>
+                        </div>
+
+                        <div class="footer">
+                            <span class="username">@${data.username || 'User'}</span>
+                            <span class="date">${formattedPost.createdAtFormatted || 'Unknown Date'}</span>
+                        </div>
+                    </div>
+                `;
+
+                gridLayout.appendChild(postElement);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        gridLayout.innerHTML = `<p>Error loading posts</p>`;
+    }
+});
+
+
+// Function to display the skeleton loader
+function showSkeletonLoader(gridLayout) {
+    gridLayout.innerHTML = `
+        <div class="loading-skeleton">
+            <div class="skeleton-post"></div>
+            <div class="skeleton-post"></div>
+            <div class="skeleton-post"></div>
+        </div>
+    `;
+}
+
+// Function to handle displaying posts
+function displayPosts(gridLayout, posts, username) {
+    if (!posts || posts.length === 0) {
+        gridLayout.innerHTML = `
+            <div class="no-posts">
+                <i class="fa-solid fa-heart-broken"></i>
+                <p>No posts to display.</p>
+            </div>`;
+    } else {
+        gridLayout.innerHTML = ''; // Clear the skeleton loader
+        posts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('grid-item');
+            
+            // Create post HTML dynamically
+            postElement.innerHTML = `
+                <div class="post-image-container">
+                    <a href="/articleview/${post._id}">
+                        <img src="${post.filePath}?v=${new Date().getTime()}" 
+                             alt="${post.title || 'Untitled'}" 
+                             class="grid-image">
+                    </a>
+                </div>
+                <div class="grid-content">
+                    <h3>${post.title || 'Untitled Post'}</h3>
+                    <div class="icons">
+                        <span class="likes">${post.likes.length} likes</span>
+                    </div>
+                    <div class="footer">
+                        <span class="username">@${username || 'User'}</span>
+                        <span class="date">${post.createdAtFormatted || 'Unknown Date'}</span>
+                    </div>
+                </div>
+            `;
+            gridLayout.appendChild(postElement);
+        });
+    }
+}
+
+// Function to fetch posts
+async function fetchPosts(endpoint, gridLayout) {
+    showSkeletonLoader(gridLayout); // Show loader before fetching data
+
+    try {
+        const response = await fetch(endpoint, { method: 'GET' });
+        const data = await response.json();
+
+        // Check if we received the posts and username from the response
+        const { posts, username } = data;
+
+        // Display the posts
+        displayPosts(gridLayout, posts, username);
+    } catch (error) {
+        console.error(`Error fetching posts from ${endpoint}:`, error);
+        gridLayout.innerHTML = `<p>Error loading posts</p>`;
+    }
+}
+
+// Event listener for liked posts
+document.getElementById('liked-icon').addEventListener('click', () => {
+    const gridLayout = document.getElementById('grid-layout');
+    fetchPosts('/profile/liked', gridLayout);
+});
+
+// Event listener for saved posts
+document.getElementById('saved-icon').addEventListener('click', () => {
+    const gridLayout = document.getElementById('grid-layout');
+    fetchPosts('/profile/saved', gridLayout);
+});
+
+
+
+        document.querySelector('.editprofile').addEventListener('click', () => {
+    const profileCardHTML = `
+        <div class="profile-card-black">
+            <div class="edit-card">
+                <div class="close-icon">
+                    <i class="fas fa-times" onclick="closeEditCard()"></i>
+                </div>
+                <form action="/updateprofile" method="post" enctype="multipart/form-data">
+                    <!-- Profile Picture Section -->
+                    <div class="profile-image">
+                        <img src="<%= userProfile?.profilepic || '/images/default-profile.png' %>" alt="Profile Picture" id="profile-pic-edit">
+                        <label for="file-upload-edit" class="edit-icon-label">
+                            <i class="fas fa-edit edit-icon"></i>
+                        </label>
+                        <input id="file-upload-edit" name="file" type="file" style="display: none;" onchange="previewImage(this)">
+                    </div>
+                    
+                    <!-- Form Fields -->
+                    <div class="profile-details">
+                        <div class="info-item">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" value="<%= userProfile?.username || '' %>" placeholder="Enter your Username">
+                        </div>
+                        <div class="info-item">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" value="<%= userProfile?.name || '' %>" placeholder="Enter your Name">
+                        </div>
+                        <div class="info-item">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" value="<%= userProfile?.email || '' %>" placeholder="Enter your Email">
+                        </div>
+                        <div class="info-item">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" placeholder="Enter your password">
+                        </div>
+                    </div>
+                    
+                    <!-- Save Button -->
+                    <div class="edit-button">
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('profile-card-container').innerHTML = profileCardHTML;
+    document.getElementById('profile-card-container').style.display = 'flex'; // Make sure the card is visible
+});
+
+function closeEditCard() {
+    document.getElementById('profile-card-container').style.display = 'none'; // Hide the card container when closing
+}
+
+// Image preview function
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById('profile-pic-edit').src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+
+
+
+    </script>
+    <%- include('partials/footer') %>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, userProfile-scalable=no">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #141414;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px 20px;
+            background-color: #141414;
+        }
+
+        /* Profile Header */
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            width: 100vw;
+        }
+
+        .profile-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #eee;
+        }
+
+        .back-arrow {
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .dots-icon {
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Settings Card */
+        .settings-card {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            background-color: #333;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            transition: bottom 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+        }
+
+        .settings-card ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .settings-card li {
+            padding: 15px 0;
+            font-size: 16px;
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .settings-card li:hover {
+            background-color: #444;
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Hidden & Active Classes */
+        .hidden {
+            bottom: -100%;
+            opacity: 0;
+        }
+
+        .active-card {
+            bottom: 0;
+            opacity: 1;
+        }
+
+        /* Profile Picture Section */
+        .profile-picture {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .picture-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border: 2px solid rgb(71, 69, 69);
+            margin-bottom: 15px;
+        }
+
+        .picture-container img {
+            border-radius: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Follow/Join Buttons */
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 15px;
+        }
+
+        .buttons-container button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px 0;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: none;
+        }
+
+        button.follow {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button.join {
+            background-color: #28a745;
+            color: white;
+        }
+
+        button.following {
+            background-color: grey;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="profile-section">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <i class="fas fa-arrow-left back-arrow" onclick="history.back();"></i>
+            <h3><%= userProfile.name %></h3>
+            <i class="fas fa-ellipsis-h dots-icon" id="dots-icon"></i>
+        </div>
+
+        <!-- Hidden Settings Card (Pop-up) -->
+        <div id="settings-card" class="settings-card hidden">
+            <i class="fas fa-times close-icon" id="close-icon"></i> <!-- Close icon -->
+            <ul>
+                <li id="share-profile">Share Profile</li>
+                <li>Show Notification</li>
+            </ul>
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div class="profile-picture">
+            <div class="picture-container" onclick="document.getElementById('file-upload').click();">
+                <% if (userProfile.profilepic) { %>
+                <img src="<%= userProfile.profilepic %>" alt="Profile Picture" id="profile-pic">
+                <% } else { %>
+                <img src="/images/default-profile.png" alt="Default Profile Picture" id="profile-pic">
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats">
+            <div><strong><%= userProfile.posts.length %></strong>
+                <p>Posts</p>
+            </div>
+            <div><strong><%= userProfile.followers.length %></strong>
+                <p>Followers</p>
+            </div>
+            <div><strong><%= userProfile.following.length %></strong>
+                <p>Following</p>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <% if (isFollowing) { %>
+                <button class="follow following" id="follow-btn">Following</button>
+            <% } else { %>
+                <button class="follow" id="follow-btn">Follow</button>
+            <% } %>
+            <button class="join">Join</button>
+        </div>
+
+        <div class="grid-layout">
+            <% if (userProfile && posts && posts.length > 0) { %> <!-- Change here -->
+                <% posts.forEach(post => { %> <!-- Change here -->
+                    <a href="/articleview/<%= post._id %>" style="text-decoration: none;">
+                    <div class="grid-item">
+                        <div class="post-image-container">
+                                <img src="<%= post.filePath %>?v=<%= new Date().getTime() %>" 
+                                     alt="<%= post.title || 'Untitled' %>" 
+                                     class="grid-image">
+                            
+                        </div>
+                        
+                        <div class="grid-content">
+                            <h3><%= post.title || 'Untitled Post' %></h3>
+            
+                            <div class="icons">
+                                <span class="likes"><%= post.likes.length %> likes</span>
+                            </div>
+            
+                            <div class="footer" style="color: #ccc;">
+                                <span class="userProfilename">@<%= post.username || 'userProfile' %></span>
+                                <span class="date"><%= post.createdAtFormatted || 'Unknown Date' %></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <% }) %>
+            <% } else { %>
+                <p>No posts available.</p>
+            <% } %>
+        </div>
+        
+        
+
+
+    </section>
+
+    <script>
+        // Handle settings card toggle
+        const dotsIcon = document.getElementById('dots-icon');
+        const settingsCard = document.getElementById('settings-card');
+        const closeIcon = document.getElementById('close-icon');
+
+        dotsIcon.addEventListener('click', () => {
+            settingsCard.classList.toggle('active-card');
+            settingsCard.classList.toggle('hidden');
+        });
+
+        closeIcon.addEventListener('click', () => {
+            settingsCard.classList.add('hidden');
+            settingsCard.classList.remove('active-card');
+        });
+
+// Handle follow button behavior
+const followBtn = document.getElementById('follow-btn');
+const userProfilename = "<%= userProfile.username %>"; // The userProfile profile you are viewing
+
+followBtn.addEventListener('click', () => {
+    fetch(`/toggle-follow/${userProfilename}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (followBtn.textContent === 'Follow') {
+            followBtn.textContent = 'Following';
+            followBtn.classList.add('following');
+        } else {
+            followBtn.textContent = 'Follow';
+            followBtn.classList.remove('following');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #171717;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        /* Main container to control sliding effect and size */
+        .comments-container {
+            width: 100%;
+            height: 100%; /* Occupies only 80% of the viewport height */
+            background-color: #222;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px 20px 0 0;
+            animation: slide-up 0.4s ease-in-out; /* Slide from bottom */
+        }
+
+        @keyframes slide-up {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* Header with Cross Icon */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: transparent;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 18px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .header i {
+            position: absolute;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Comment Section */
+        .comments-section {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .comment {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+        }
+
+        .comment img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-content h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .comment-content p {
+            margin: 5px 0;
+            color: #aaa;
+        }
+
+        .comment-content .actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .comment-content .actions i {
+            cursor: pointer;
+        }
+
+        /* Style for reply button */
+        .comment-content .reply-btn {
+            color: #1da1f2;
+            cursor: pointer;
+        }
+
+        /* Comment input box updated based on Instagram design */
+        .comment-input {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            background-color: #222; /* Same background as the page for seamless look */
+            border-top: 1px solid #333;
+        }
+
+        .comment-input img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-left: 10px; /* Align profile pic closer to the edge */
+        }
+
+        .comment-input textarea {
+            flex: 1;
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            resize: none; /* Disable resizing */
+            height: 35px; /* Align with the profile picture size */
+            margin: 0 10px; /* Space between input and icons */
+        }
+
+        .comment-input textarea::placeholder {
+            color: #999;
+            padding: 7px 0px;
+        }
+
+        /* Send icon aligned to the right */
+        .comment-input button {
+            background-color: transparent;
+            border: none;
+            color: #1da1f2;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 10px; /* Space from the edge */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Comments container with slide effect -->
+    <div class="comments-container">
+        <!-- Header with Close (Cross) Button -->
+        <div class="header">
+            <h2>Comments</h2>
+            <i class="fas fa-times"></i> <!-- This is the cross button -->
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <div class="comment">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture">
+                <div class="comment-content">
+                    <h4>awakeningbody <span>· 6d</span></h4>
+                    <p>This is so wholesome 😍</p>
+                    <div class="actions">
+                        <i class="far fa-heart"></i>
+                        <span>5,087 likes</span>
+                        <span class="reply-btn">Reply</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comment">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile Picture">
+                <div class="comment-content">
+                    <h4>spiritualheals <span>· 1d</span></h4>
+                    <p>@awakeningbody Love your page! I just followed you 🙌🙏 Thanks for all your efforts</p>
+                    <div class="actions">
+                        <i class="far fa-heart"></i>
+                        <span>81 likes</span>
+                        <span class="reply-btn">Reply</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comment Input -->
+        <div class="comment-input">
+            <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Profile Picture">
+            <textarea placeholder="Add a comment..."></textarea>
+            <button><i class="fas fa-paper-plane"></i></button> <!-- Send icon -->
+        </div>
+    </div>
+
+    <script>
+        // Close button functionality
+        document.querySelector('.fa-times').addEventListener('click', function() {
+            window.history.back(); // Go back to the previous page when close icon is clicked
+        });
+    </script>
+</body>
+</html>

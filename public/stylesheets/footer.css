@@ -1,0 +1,98 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #141414; /* Dark background */
+    padding-bottom: 60px; /* Space for footer to avoid content overlap */
+}
+
+/* Footer styles */
+.bottom-nav{
+    background-color: #1f1f1f; /* Dark footer background */
+    color: #e0e0e0; /* Light text color */
+    text-align: center;
+    padding: 3px 0;
+    position: fixed; /* Fix the footer at the bottom */
+    bottom: 0;
+    width: 100%;
+    z-index: 10; /* Ensure footer stays on top */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); /* Slight shadow to separate footer from content */
+}
+
+footer a {
+    color: #4CAF50; /* Link color */
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #76ff76; /* Hover state for links */
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    bottom: 0;
+    width: 100%; /* Full width */
+    /* background-color: rgba(0, 0, 0, 0.5); Black background with transparency */
+}
+
+.modal-content {
+    background-color: #181818; /* Dark theme for modal content */
+    color: white;
+    margin: 15% auto; /* Center the modal */
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Upload options styling */
+.upload-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.upload-option i {
+    font-size: 2rem;
+    color: #4CAF50; /* Icon color */
+}
+
+.upload-option p {
+    margin: 0;
+    font-size: 1.2rem;
+}

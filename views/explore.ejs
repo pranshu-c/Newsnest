@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Theme News Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="/stylesheets/explore.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Breaking News Section -->
+        <section class="breaking-news-section">
+            <h1 class="section-title">Breaking News</h1>
+            <div class="breaking-news">
+                <div class="news-item">
+                    <div class="news-placeholder">400 x 250</div>
+                    <div class="news-details">
+                        <h2>BBC News</h2>
+                        <h3>Notre-Dame: Massive fire ravages Paris cathedral</h3>
+                        <p class="news-date">April 16, 2019</p>
+                        <i class="fa-regular fa-bookmark bookmark-icon" onclick="toggleBookmark(this)"></i>
+                    </div>
+                </div>
+                <div class="news-item">
+                    <div class="news-placeholder">400 x 250</div>
+                    <div class="news-details">
+                        <h2>BBC News</h2>
+                        <h3>Notre-Dame: Massive fire ravages Paris cathedral</h3>
+                        <p class="news-date">April 16, 2019</p>
+                        <i class="fa-regular fa-bookmark bookmark-icon" onclick="toggleBookmark(this)"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Stories Section -->
+        <section class="top-stories-section">
+            <h1 class="section-title">Top Stories</h1>
+            <div class="top-stories">
+                <div class="story">
+                    <div class="story-placeholder">150 x 150</div>
+                    <div class="story-details">
+                        <h2>National Geographic</h2>
+                        <h3>One million species at risk of extinction</h3>
+                        <i class="fa-regular fa-bookmark bookmark-icon" onclick="toggleBookmark(this)"></i>
+                    </div>
+                </div>
+                <div class="story">
+                    <div class="story-placeholder">150 x 150</div>
+                    <div class="story-details">
+                        <h2>The Independent</h2>
+                        <h3>iOS 13: Everything you need to know</h3>
+                        <i class="fa-regular fa-bookmark bookmark-icon" onclick="toggleBookmark(this)"></i>
+                    </div>
+                </div>
+            </div>
+            <h1 class="section-title">Top Stories</h1>
+            <div class="top-stories">
+                <div class="story">
+                    <div class="story-placeholder">150 x 150</div>
+                    <div class="story-details">
+                        <h2>National Geographic</h2>
+                        <h3>One million species at risk of extinction</h3>
+                        <i class="fa-regular fa-bookmark bookmark-icon" onclick="toggleBookmark(this)"></i>
+                    </div>
+                </div>
+                <div class="story">
+                    <div class="story-placeholder">150 x 150</div>
+                    <div class="story-details">
+                        <h2>The Independent</h2>
+                        <h3>iOS 13: Everything you need to know</h3>
+                        <i class="fa-regular fa-bookmark bookmark-icon" onclick="toggleBookmark(this)"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            function toggleBookmark(icon) {
+                // Toggle between hollow (fa-regular) and filled (fa-solid) bookmark icons
+                if (icon.classList.contains('fa-regular')) {
+                    icon.classList.remove('fa-regular');
+                    icon.classList.add('fa-solid');
+                } else {
+                    icon.classList.remove('fa-solid');
+                    icon.classList.add('fa-regular');
+                }
+            }
+        </script>
+        
+        <%- include('partials/footer') %>

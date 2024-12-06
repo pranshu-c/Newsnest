@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+/* Footer and "+" Button */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px 0;
+}
+
+.plus-btn {
+    font-size: 2.5rem;
+    color: #fff;
+    background-color: #ff5252;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal styles */
+#uploadModal {
+    position: fixed; /* Stick to the viewport */
+    bottom: 0; /* Align to the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontal centering */
+    display: none; /* Hidden by default */
+    background-color: #2e2e2e;
+    border-radius: 10px 10px 0 0; /* Rounded top corners */
+    padding: 20px;
+    width: 100%; /* Full width */
+    max-width: 500px; /* Constrain the max width */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* Shadow from the top */
+    z-index: 9; /* Make sure it stays above other elements */
+}
+
+
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* When modal is active, display it */
+#uploadModal.active {
+    display: block;
+}
+/* Active class for icons */
+.nav-item.active {
+    color: #ffcc00; /* Bright color for active icons */
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+    background-color: #333;
+    padding: 20px;
+    z-index: 10;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Close button for modal */
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Other modal styling */
+.upload-options {
+    display: flex;
+    justify-content: space-around;
+}
+
+.upload-option img {
+    width: 50px;
+    height: 50px;
+}
+
+.upload-option p {
+    color: white;
+}

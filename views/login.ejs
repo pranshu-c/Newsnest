@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login page</title>
+  <link rel="stylesheet" href="/stylesheets/register-login.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <!--pinterest logo-->
+      <img src="/logos/Screenshot 2024-09-14 185639.png" alt="">
+      <p class="header">login to see more</p>
+
+      <% if (messages.error && messages.error.length> 0) { %>
+        <div class="error-message">
+          <% messages.error.forEach(function(error) { %>
+            <p class="error">
+              <%= error %>
+            </p>
+            <% }); %>
+        </div>
+        <% } %>
+
+          <form action="/login" method="post">
+            <input name="username" type="text" placeholder="Username" class="detail" />
+            <br />
+            <input name="password" type="password" placeholder="Password" class="detail" />
+
+            <button class="btn int">Login Account</button>
+          </form>
+          <a href="/forgot-password" class="forgot-password-link" style="text-decoration: none; color: #181818;">Forgot Password?</a>
+          <footer>
+            <p>
+              By continuing, you agree to Newzbuddy's
+              <b>Terms of Service, Privacy policy.</b>
+            </p>
+            <p>not on Newzbuddy yet?</p><a href="/">register</a>
+          </footer>
+    </div>
+  </div>
+</body>
+
+</html>

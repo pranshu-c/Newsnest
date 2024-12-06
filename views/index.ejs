@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewzBuddy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/stylesheets/indexstyle.css">
+    <link rel="stylesheet" href="/stylesheets/footer.css">
+</head>
+<body>
+    <header>
+       <%- include('partials/header.ejs') %>
+    </header>
+
+    <section class="highlights">
+        <a href="/highlites" class="clickable-highlight">
+            <div class="highlight-item">
+                <img class="profile-pic" src="profile1.jpg" alt="Profile Pic">
+                Highlight 1
+            </div>
+        </a>
+        <a href="/highlites" class="clickable-highlight">
+            <div class="highlight-item">
+                <img class="profile-pic" src="profile2.jpg" alt="Profile Pic">
+                Highlight 2
+            </div>
+        </a>
+    </section>
+
+    <section class="articles">
+        <a href="/articleview" class="clickable-article">
+            <div class="article">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/800x400" alt="Article Image 1">
+                </div>
+                <div class="article-content">
+                    <h2>Andrew Sullivan: My Distraction Sickness — and Yours</h2>
+                    <h3 class="source-name">New York</h3>
+                    <div class="date-icons-wrapper">
+                        <p>September 19, 2016</p>
+                        <div class="article-icons">
+                            <i class="far fa-heart like-icon"></i>
+                            <i class="far fa-comment comment-icon"></i>
+                            <i class="far fa-bookmark bookmark-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="/articleview" class="clickable-article">
+            <div class="article">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/800x400" alt="Article Image 2">
+                </div>
+                <div class="article-content">
+                    <h2>Do Not Disturb: How I Ditched My Phone and Unbroke My Brain</h2>
+                    <h3 class="source-name">The New York Times</h3>
+                    <div class="date-icons-wrapper">
+                        <p>February 23, 2019</p>
+                        <div class="article-icons">
+                            <i class="far fa-heart like-icon"></i>
+                            <i class="far fa-comment comment-icon"></i>
+                            <i class="far fa-bookmark bookmark-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </section>
+    
+    <script src="/javascripts/index.js"></script>
+
+    <%- include('partials/footer.ejs') %>
+
+    <script>
+        // Prevent redirection when icons are clicked
+        document.querySelectorAll('.like-icon, .comment-icon, .bookmark-icon').forEach(function(icon) {
+            icon.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default behavior (link click)
+                event.stopPropagation(); // Prevent the event from bubbling up to the <a> tag
+                console.log('Icon clicked');
+            });
+        });
+
+        // Adding click animation for articles and highlights
+        document.querySelectorAll('.clickable-article, .clickable-highlight').forEach(function(element) {
+            element.addEventListener('click', function() {
+                element.classList.add('pop-up-animation');
+                setTimeout(() => element.classList.remove('pop-up-animation'), 500); // Reset the animation
+            });
+        });
+    </script>
+</body>
+</html>

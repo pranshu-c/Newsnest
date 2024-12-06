@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Articles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/stylesheets/upparticles.css">
+</head>
+
+<body>
+    <!-- Upload Article Card -->
+    <form action="/upparticle" method="post" enctype="multipart/form-data">
+        <div id="upload-article-card" class="upload-card">
+            <!-- Back Arrow Icon -->
+            <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+
+            <!-- Image Upload Section -->
+            <div class="upload-section">
+                <div class="image-preview" id="image-preview" onclick="triggerFileInput()">
+                    <p>Click to Upload Image</p>
+                </div>
+                <input type="file" name="file" id="upload-image" class="upload-input" onchange="previewImage(event)"
+                    style="display: none;">
+            </div>
+
+            <!-- Title Input -->
+            <div class="input-section">
+                <label for="article-title">Title</label>
+                <textarea id="article-title" name="title" class="input-field" placeholder="Enter article title"></textarea>
+            </div>
+
+            <!-- Description Input -->
+            <div class="input-section">
+                <label for="article-description">Description</label>
+                <textarea id="article-description" name="description" class="input-field"
+                    placeholder="Enter article description"></textarea>
+            </div>
+
+            <!-- Location Input -->
+            <div class="input-section">
+                <label for="article-location">Location</label>
+                <textarea id="article-location" name="location" class="input-field" placeholder="Enter location"></textarea>
+            </div>
+
+            <!-- Tags Input -->
+            <div class="input-section">
+                <label for="article-tags">Tags</label>
+                <textarea id="article-tags" name="tags" class="input-field" placeholder="Enter tags (#hashtags)"></textarea>
+            </div>
+        </div>
+
+
+            <!-- Upload Article Text -->
+            <button type="submit"><span class="upload-article-text">Upload</span></button>
+    </form>
+
+
+    <script>
+        // Function to trigger the hidden file input when the image box is clicked
+        function triggerFileInput() {
+            document.getElementById('upload-image').click();
+        }
+
+        // Function to display the preview of the uploaded image
+        function previewImage(event) {
+            const imagePreview = document.getElementById('image-preview');
+            imagePreview.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            imagePreview.appendChild(img);
+        }
+    </script>
+
+</body>
+
+</html>

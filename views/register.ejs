@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page - Newzbuddy</title>
+    <link rel="stylesheet" href="/stylesheets/register-login.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <!-- Logo -->
+             <img src="/logos/Screenshot 2024-09-14 185639.png" alt="">
+             <p class="header">Create Account to See More</p>
+             <% if (messages.error) { %>
+                <div class="error-message">
+                    <% messages.error.forEach(function(error) { %>
+                        <p><%= error %></p>
+                    <% }); %>
+                </div>
+            <% } %>
+
+            <form action="/register" method="post">
+                <input name="username" type="text" placeholder="Username" class="detail" />
+                <input name="name" type="text" placeholder="Name" class="detail" />
+                <input name="email" type="email" placeholder="Email" class="detail" />
+                <input name="password" type="password" placeholder="Password" class="detail" />
+                <button class="btn int">Register Account</button>
+            </form>
+
+            <footer>
+                <p>
+                    By continuing, you agree to Newzbuddy's 
+                    <b>Terms of Service, Privacy Policy.</b>
+                </p>
+                <hr />
+                <p>Already have an account?</p><a href="/loginpage">Login</a>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

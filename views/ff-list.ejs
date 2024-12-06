@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= userProfile.username %>'s Profile
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Prevent horizontal overflow */
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .back-arrow {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .username-container {
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .follow-info {
+            display: flex;
+            justify-content: space-evenly;
+            width: 100%;
+            max-width: 300px;
+            font-size: 16px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .follow-info span {
+            padding: 10px 0;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 2px;
+            background-color: #fff;
+            transition: transform 0.3s ease;
+            width: 50%;
+            left: 0;
+        }
+
+        .list-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .list-container.active {
+            display: block;
+        }
+
+        .user-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .user-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .user-list li img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .user-list li .username {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        .user-list li button {
+            background-color: #1e90ff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .user-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header section -->
+    <div class="header">
+        <i class="fas fa-arrow-left back-arrow" id="back-arrow"></i>
+        <div class="username-container">
+            <div class="username">
+                <%= userProfile.username %>
+            </div>
+        </div>
+
+        <div class="follow-info">
+            <span id="followers-count">Followers</span>
+            <span id="following-count">Following</span>
+            <div id="scroll-indicator" class="scroll-indicator"></div>
+        </div>
+    </div>
+
+    <!-- Followers list -->
+    <div id="followers-list" class="list-container active">
+        <ul class="user-list">
+            <% userProfile.followers.forEach(follower=> { %>
+                <a href="/profile/ff/<%= follower._id %>" class="user-link">
+                    <li>
+                        <img src="<%= follower.profilepic %>" alt="Profile Picture">
+                        <span class="username">
+                            <%= follower.name %>
+                        </span>
+                        <button>Remove</button>
+                    </li>
+                </a>
+                <% }); %>
+        </ul>
+    </div>
+
+    <!-- Following list -->
+    <div id="following-list" class="list-container">
+        <ul class="user-list">
+            <% userProfile.following.forEach(followingUser=> { %>
+                <a href="/profile/ff/<%= followingUser._id %>" class="user-link">
+                    <li>
+                        <img src="<%= followingUser.profilepic %>" alt="Profile Picture">
+                        <span class="username">
+                            <%= followingUser.name %>
+                        </span>
+                        <button>Unfollow</button>
+                    </li>
+                </a>
+                <% }); %>
+        </ul>
+    </div>
+
+        <script>
+    const followersBtn = document.getElementById('followers-count');
+    const followingBtn = document.getElementById('following-count');
+    const followersList = document.getElementById('followers-list');
+    const followingList = document.getElementById('following-list');
+    const scrollIndicator = document.getElementById('scroll-indicator');
+    const backArrow = document.getElementById('back-arrow');
+
+    // Switch between followers and following lists
+    followersBtn.addEventListener('click', function () {
+        followersList.classList.add('active');
+        followingList.classList.remove('active');
+        scrollIndicator.style.transform = 'translateX(0%)';
+    });
+
+    followingBtn.addEventListener('click', function () {
+        followingList.classList.add('active'); // Activate following list
+        followersList.classList.remove('active'); // Deactivate followers list
+        scrollIndicator.style.transform = 'translateX(100%)'; // Move indicator to the right
+    });
+
+    // Back arrow redirection
+    backArrow.addEventListener('click', function () {
+        window.location.href = '/profile/<%= userProfile._id %>';
+    });
+</script>
+
+    </script>
+
+</body>
+
+</html>

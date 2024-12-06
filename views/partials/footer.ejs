@@ -1,0 +1,100 @@
+<!-- Bottom Navigation Bar -->
+<nav class="bottom-nav">
+    <!-- Change buttons to a tags for direct navigation -->
+    <a href="/home" class="nav-item" data-id="home" data-page="home"><i class="fa-solid fa-house"></i></a>
+    <a href="/explore" class="nav-item" data-id="explore" data-page="explore"><i class="fa-solid fa-newspaper"></i></a>
+    
+    <!-- Keep the modal trigger as a button without href -->
+    <button class="nav-item plus-btn" id="openUploadModal" data-id="addyours"><i class="fa-solid fa-square-plus"></i></button>
+
+    <!-- Direct links for flicks and profile -->
+    <a href="/flicks" class="nav-item" data-id="flicks"><i class="fa-brands fa-flickr"></i></a>
+    <a href="/profile" class="nav-item" data-id="profile" data-page="profile"><i class="fa-regular fa-user"></i></a>
+</nav>
+
+
+<!-- Upload Modal (initially hidden) -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="upload-options">
+
+            <a href="/upload-hihglites" style="text-decoration: none; color: white;"><div class="upload-option" id="uploadHighlites">
+                <i class="fa-solid fa-video"></i>
+                <p>Upload a Highlites</p>
+                <input type="file" id="upload-video" accept="video/*" style="display: none;">
+            </div></a>
+            
+            <!-- <div class="upload-option">
+                <i class="fa-solid fa-camera"></i>
+                <p>Upload flicks</p>
+            </div>
+            <div class="upload-option">
+                <i class="fa-solid fa-broadcast-tower"></i>
+                <p>Go live</p>
+            </div> -->
+
+            <a href="/upload-articles" style="color: white; text-decoration: none;"><div class="upload-option">
+                <i class="fa-solid fa-newspaper"></i>
+                <p>Upload Article</p>
+            </div></a>
+        </div>
+    
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navItems = document.querySelectorAll('.nav-item');
+        const headerIcons = document.querySelectorAll('.search-bell i, .bell');
+        
+        // Get modal elements
+        const uploadModal = document.getElementById('uploadModal');
+        const openModalBtn = document.getElementById('openUploadModal');
+        const closeModalBtn = document.querySelector('.close');
+    
+        // Show modal when "+" button is clicked
+        openModalBtn.addEventListener('click', function () {
+            uploadModal.style.display = 'block';
+        });
+    
+        // Hide modal when the close button is clicked
+        closeModalBtn.addEventListener('click', function () {
+            uploadModal.style.display = 'none';
+        });
+    
+        // Hide modal when clicking outside the modal content
+        window.addEventListener('click', function (event) {
+            if (event.target === uploadModal) {
+                uploadModal.style.display = 'none';
+            }
+        });
+    
+        // Set active icon logic using the current URL
+        function setActiveIcon(items) {
+            const currentPath = window.location.pathname; // Get the current URL path
+    
+            items.forEach(item => {
+                const pageLink = item.getAttribute('href'); // Get the href attribute
+    
+                // Compare href with the current path to set the active class
+                if (pageLink === currentPath) {
+                    item.classList.add('active');  // Highlight the active icon
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+    
+        // Activate header and footer icons
+        setActiveIcon(headerIcons);
+        setActiveIcon(navItems);
+    });
+    </script>
+    
+
+    
+</body>
+
+</html>

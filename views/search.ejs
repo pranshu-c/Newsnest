@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="/stylesheets/search.css">
+</head>
+
+<body>
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <i id="back-arrow" class="fas fa-arrow-left"></i>
+        <input id="s-inp" type="text" placeholder="Search">
+        <a href="/search" class="search-link">Search</a>
+    </div>
+
+    <!-- Users Section -->
+    <div id="users-section" class="section users">
+        <h2>Users</h2>
+        <div class="user-list">
+            <!-- Search results will appear here -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let inp = document.querySelector("#s-inp");
+        let clutter = "";
+
+        inp.addEventListener("input", function () {
+            let query = inp.value.trim();
+            if (query) {
+                axios.get(`/username/${query}`)
+                    .then(function (response) {
+                        clutter = "";
+                        response.data.forEach(function (elem) {
+                            clutter += `
+                                <div class="effect-item" data-username="${elem.username}">
+                                    <img src="${elem.profilepic}" alt="Profile Picture" class="profile-pic" width="40" height="40">
+                                    <div class="effect-name">
+                                        <a href="/profile/${elem.username}" class="profile-link">${elem.username}</a>
+                                    </div>
+                                    
+                                </div>`;
+                        });
+                        document.querySelector(".user-list").innerHTML = clutter;
+
+                        // Add click event listener to the whole div
+                        document.querySelectorAll('.effect-item').forEach(item => {
+                            item.addEventListener('click', function () {
+                                const username = this.getAttribute('data-username');
+                                window.location.href = `/profile/${username}`;
+                            });
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            } else {
+                document.querySelector(".user-list").innerHTML = "";
+            }
+        });
+
+        document.getElementById("back-arrow").addEventListener("click", () => {
+            window.location.href = '/home';
+        });
+    </script>
+</body>
+</html>

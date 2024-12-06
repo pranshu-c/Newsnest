@@ -1,0 +1,445 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #141414;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Profile Section */
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px 20px;
+    background-color: #141414;
+    text-align: center;
+    width: 100%;
+}
+
+/* Profile Picture */
+.profile-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.picture-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border: 2px solid rgb(71, 69, 69);
+    margin: 20px 5px;
+}
+
+.picture-container img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.profile-picture h2 {
+    margin-top: 10px;
+    color: #fff;
+}
+
+/* Profile Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    color: #fff;
+}
+
+.stats div {
+    flex: 1;
+}
+
+.stats div strong {
+    font-size: 18px;
+    color: #fff;
+}
+
+.stats div p {
+    font-size: 12px;
+    color: #bbb;
+}
+
+/* Profile Buttons */
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.profile-buttons button {
+    background-color: #333;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #e0e0e0;
+}
+
+.profile-buttons button i {
+    font-size: 18px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Header Section */
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+}
+
+.profile-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #eee;
+}
+
+.settings-icon {
+    font-size: 1.5rem;
+    color: #eee;
+    cursor: pointer;
+}
+
+/* Icon Section */
+.icon-section {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #141414;
+    color: #bbb;
+    width: 100vw;
+    max-width: 600%;
+}
+
+.icon-section i {
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.icon-section i:hover {
+    color: #fff;
+}
+
+.icon-section i.active {
+    color: #fff;
+}
+
+
+
+/* Grid Layout for Posts */
+.grid-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100vw; /* Ensure it fits within the viewport */
+    margin: 0 auto;
+}
+
+/* Flex container for each post */
+.grid-item {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    gap: 8px; /* Reduced space between image and content */
+    width: 100%;
+    height: 120px; /* Ensure grid item height matches image height */
+}
+
+/* Post image */
+.grid-item img {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Grid content */
+.grid-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 120px; /* Ensure it matches the image height */
+}
+
+/* Title styling with truncation */
+.grid-content h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1.2;
+    max-height: calc(1.2em * 4); /* Max 4 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Truncate after 4 lines */
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    flex-grow: 1; /* Allow the title to grow and take up available space */
+}
+
+/* Likes and icons section */
+.grid-content .icons {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 12px;
+    color: #bbb;
+    margin-top: 10px;
+}
+
+.grid-content .likes {
+    margin: 0;
+    color: gray; /* Changed from red to gray */
+    font-size: 12px;
+}
+
+/* Footer (Username and Date) aligned at the bottom */
+.grid-content .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto; /* Push the footer to the bottom of the text content */
+}
+
+.grid-content .username {
+    color: #ccc;
+    font-size: 12px;
+    text-align: left;
+}
+
+.grid-content .date {
+    color: #ccc;
+    font-size: 12px;
+    text-align: right;
+}
+
+
+/* Settings Card */
+.settings-card {
+    position: fixed;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background-color: #333;
+    border-radius: 15px 15px 0 0;
+    padding: 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    transition: bottom 0.3s ease, opacity 0.3s ease;
+    z-index: 1000;
+    opacity: 0;
+}
+
+.settings-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.settings-card li {
+    padding: 15px 0;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.settings-card li:hover {
+    background-color: #444;
+}
+
+/* Close Icon */
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.close-icon:hover {
+    color: #bbb;
+}
+
+/* Hidden and Active Classes for Settings */
+.hidden {
+    bottom: -100%;
+    opacity: 0;
+}
+
+.active-card {
+    bottom: 0;
+    opacity: 1;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #171717;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
+.nav-item {
+    color: gray;
+    font-size: 30px;
+    background: none;
+    border: none;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+.nav-item.active {
+    color: white;
+}
+/* Black overlay to dim the background */
+.profile-card-black {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); /* Dim the background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it sits above all content */
+}
+
+/* Edit Card styling */
+.edit-card {
+    background-color: #1c1c1c; /* Dark background for the card */
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    color: #fff;
+}
+
+/* Close icon styling */
+.edit-card .close-icon {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.edit-card .close-icon i {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+/* Profile image section */
+.profile-image {
+    position: relative;
+    margin-bottom: 20px;
+    display: inline-block; /* Ensures the image stays in its own space */
+}
+
+.profile-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3897f0; /* Blue Instagram-like border */
+    display: block;
+}
+
+.edit-icon-label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #333;
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    border: 2px solid #1c1c1c; /* Add a border to blend with background */
+    transform: translate(25%, 25%); /* Shift it slightly to overlap */
+}
+
+.edit-icon-label i {
+    color: #fff;
+    font-size: 1em;
+}
+
+/* Form fields styling */
+.profile-details .info-item {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.profile-details .info-item label {
+    display: block;
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 5px;
+}
+
+.profile-details .info-item input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #222;
+    color: #fff;
+}
+
+/* Save button styling */
+.edit-button button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3897f0;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
