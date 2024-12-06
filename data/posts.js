@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/Newzbuddy',{ useNewUrlParser: true,
-    useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://elite-p:<98709870>@newzbuddy1.v4eu1.mongodb.net/Newzbuddy?retryWrites=true&w=majority&appName=newzbuddy1', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('MongoDB connected successfully'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
 
 const postSchema = new mongoose.Schema({
     username: {
