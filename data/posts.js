@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb+srv://elite-p:<98709870>@newzbuddy1.v4eu1.mongodb.net/Newzbuddy?retryWrites=true&w=majority&appName=newzbuddy1', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log('MongoDB connected successfully'))
-  .catch(err => console.error('MongoDB connection error:', err));
-
+mongoose.connect('mongodb+srv://elite-p:98709870@newzbuddy1.v4eu1.mongodb.net/?retryWrites=true&w=majority&appName=newzbuddy1')
 
 const postSchema = new mongoose.Schema({
     username: {
